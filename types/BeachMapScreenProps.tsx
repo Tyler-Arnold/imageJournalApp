@@ -1,4 +1,7 @@
-import {DrawerScreenProps} from '@react-navigation/drawer';
+import {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
 import {RootParamsType} from './RootParamsType';
 
-export type BeachMapScreenProps = DrawerScreenProps<RootParamsType, 'BeachMap'>;
+export type BeachMapScreenProps = BottomTabScreenProps<
+  RootParamsType,
+  'BeachMap'
+>;

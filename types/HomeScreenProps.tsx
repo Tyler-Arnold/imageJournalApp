@@ -1,4 +1,4 @@
-import {DrawerScreenProps} from '@react-navigation/drawer';
+import {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
 import {RootParamsType} from './RootParamsType';
 
-export type HomeScreenProps = DrawerScreenProps<RootParamsType, 'Home'>;
+export type HomeScreenProps = BottomTabScreenProps<RootParamsType, 'Home'>;

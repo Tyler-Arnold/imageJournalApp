@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {AppearanceProvider, useColorScheme} from 'react-native-appearance';
-import {createDrawerNavigator} from '@react-navigation/drawer';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {
   NavigationContainer,
   DefaultTheme,
@@ -18,7 +18,7 @@ import {homeIcon, mapIcon} from './components/DrawerIcons';
  * @return {React.FC}
  */
 const App: React.FC = () => {
-  const Drawer = createDrawerNavigator<RootParamsType>();
+  const Tab = createBottomTabNavigator<RootParamsType>();
   const scheme = useColorScheme();
 
   return (
@@ -27,22 +27,22 @@ const App: React.FC = () => {
         <NavigationContainer
           theme={scheme === 'dark' ? DarkTheme : DefaultTheme}
         >
-          <Drawer.Navigator initialRouteName="Home">
-            <Drawer.Screen
+          <Tab.Navigator initialRouteName="Home">
+            <Tab.Screen
               name="Home"
               component={HomeScreen}
               options={{
-                drawerIcon: homeIcon,
+                tabBarIcon: homeIcon,
               }}
             />
-            <Drawer.Screen
+            <Tab.Screen
               name="BeachMap"
               component={BeachMapScreen}
               options={{
-                drawerIcon: mapIcon,
+                tabBarIcon: mapIcon,
               }}
             />
-          </Drawer.Navigator>
+          </Tab.Navigator>
         </NavigationContainer>
       </AppearanceProvider>
     </BeachContainer.Provider>
