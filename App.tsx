@@ -12,7 +12,7 @@ import {HomeScreen} from './screens/HomeScreen';
 import {RootParamsType} from './types/RootParamsType';
 import {BeachContainer} from './state/BeachContainer';
 import {homeIcon, mapIcon} from './components/DrawerIcons';
-import {CameraScreen} from './screens/CameraScreen';
+import {CameraStackScreen} from './screens/CameraStackScreen';
 
 /**
  * Entry point for the program
@@ -45,7 +45,7 @@ const App: React.FC = () => {
             />
             <Tab.Screen
               name="Camera"
-              component={CameraScreen}
+              component={CameraStackScreen}
               options={{
                 tabBarIcon: mapIcon,
               }}

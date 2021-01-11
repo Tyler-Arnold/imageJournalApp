@@ -1,7 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
-import {BeachList} from '../components/BeachList';
-import {CameraScreenProps} from '../types/CameraScreenProps';
+import {CameraStackScreenProps} from '../types/CameraStackScreenProps';
 import {Camera} from 'expo-camera';
 
 /**
@@ -9,8 +8,8 @@ import {Camera} from 'expo-camera';
  * @param {BeachMapScreenProps} props
  * @return {React.FC<BeachMapScreenProps>}
  */
-export const CameraScreen: React.FC<CameraScreenProps> = (
-    props: CameraScreenProps,
+export const CameraScreen: React.FC<CameraStackScreenProps> = (
+    props: CameraStackScreenProps,
 ) => {
   const [hasPermission, setHasPermission] = useState<boolean | null>(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
@@ -33,31 +32,39 @@ export const CameraScreen: React.FC<CameraScreenProps> = (
   return (
     <View style={styles.view}>
       <View style={styles.container}>
-        <Camera style={styles.camera} type={type} ref={camera}>
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => {
-                setType(
-                  type === Camera.Constants.Type.back
-                    ? Camera.Constants.Type.front
-                    : Camera.Constants.Type.back,
-                );
-              }}
-            >
-              <Text style={styles.text}> Flip </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => {
-                // takePictureAsync()
-              }}
-            >
-              <Text style={styles.text}> Snap </Text>
-            </TouchableOpacity>
-            ;
-          </View>
-        </Camera>
+        {props.navigation.isFocused() && (
+          <Camera style={styles.camera} type={type} ref={camera}>
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => {
+                  setType(
+                    type === Camera.Constants.Type.back
+                      ? Camera.Constants.Type.front
+                      : Camera.Constants.Type.back,
+                  );
+                }}
+              >
+                <Text style={styles.text}> Flip </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => {
+                  camera.current?.takePictureAsync({
+                    onPictureSaved: (picture) => {
+                      // picture saved, do some stuff
+                      props.navigation.navigate('Preview', {
+                        image: picture.uri,
+                      });
+                    },
+                  });
+                }}
+              >
+                <Text style={styles.text}> Snap </Text>
+              </TouchableOpacity>
+            </View>
+          </Camera>
+        )}
       </View>
     </View>
   );
@@ -82,8 +89,6 @@ const styles = StyleSheet.create({
   },
   camera: {
     flex: 1,
-    width: 350,
-    marginHorizontal: 0,
   },
   buttonContainer: {
     flex: 1,
