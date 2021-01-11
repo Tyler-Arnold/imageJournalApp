@@ -14,6 +14,7 @@ import {BeachContainer} from './state/BeachContainer';
 import {homeIcon, mapIcon} from './components/DrawerIcons';
 import {CameraStackScreen} from './screens/CameraStackScreen';
 import {ImageContainer} from './state/ImageContainer';
+import {HomeStackScreen} from './screens/HomeStackScreen';
 
 /**
  * Entry point for the program
@@ -33,7 +34,7 @@ const App: React.FC = () => {
             <Tab.Navigator initialRouteName="Home">
               <Tab.Screen
                 name="Home"
-                component={HomeScreen}
+                component={HomeStackScreen}
                 options={{
                   tabBarIcon: homeIcon,
                 }}
