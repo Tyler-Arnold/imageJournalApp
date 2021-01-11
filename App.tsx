@@ -13,6 +13,7 @@ import {RootParamsType} from './types/RootParamsType';
 import {BeachContainer} from './state/BeachContainer';
 import {homeIcon, mapIcon} from './components/DrawerIcons';
 import {CameraStackScreen} from './screens/CameraStackScreen';
+import {ImageContainer} from './state/ImageContainer';
 
 /**
  * Entry point for the program
@@ -23,37 +24,39 @@ const App: React.FC = () => {
   const scheme = useColorScheme();
 
   return (
-    <BeachContainer.Provider>
-      <AppearanceProvider>
-        <NavigationContainer
-          theme={scheme === 'dark' ? DarkTheme : DefaultTheme}
-        >
-          <Tab.Navigator initialRouteName="Home">
-            <Tab.Screen
-              name="Home"
-              component={HomeScreen}
-              options={{
-                tabBarIcon: homeIcon,
-              }}
-            />
-            <Tab.Screen
-              name="BeachMap"
-              component={BeachMapScreen}
-              options={{
-                tabBarIcon: mapIcon,
-              }}
-            />
-            <Tab.Screen
-              name="Camera"
-              component={CameraStackScreen}
-              options={{
-                tabBarIcon: mapIcon,
-              }}
-            />
-          </Tab.Navigator>
-        </NavigationContainer>
-      </AppearanceProvider>
-    </BeachContainer.Provider>
+    <ImageContainer.Provider>
+      <BeachContainer.Provider>
+        <AppearanceProvider>
+          <NavigationContainer
+            theme={scheme === 'dark' ? DarkTheme : DefaultTheme}
+          >
+            <Tab.Navigator initialRouteName="Home">
+              <Tab.Screen
+                name="Home"
+                component={HomeScreen}
+                options={{
+                  tabBarIcon: homeIcon,
+                }}
+              />
+              <Tab.Screen
+                name="BeachMap"
+                component={BeachMapScreen}
+                options={{
+                  tabBarIcon: mapIcon,
+                }}
+              />
+              <Tab.Screen
+                name="Camera"
+                component={CameraStackScreen}
+                options={{
+                  tabBarIcon: mapIcon,
+                }}
+              />
+            </Tab.Navigator>
+          </NavigationContainer>
+        </AppearanceProvider>
+      </BeachContainer.Provider>
+    </ImageContainer.Provider>
   );
 };
 
