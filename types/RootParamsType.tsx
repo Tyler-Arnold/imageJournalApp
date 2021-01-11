@@ -5,5 +5,5 @@ import {Beach} from './Beach';
 export type RootParamsType = {
   Home: undefined;
   BeachMap: { beach: Beach } | undefined;
-  Camera: undefined;
+  Camera: { screen: string; params: { image: string } } | undefined;
 };

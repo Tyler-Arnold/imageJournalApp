@@ -2,6 +2,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {CameraStackScreenProps} from '../types/CameraStackScreenProps';
 import {Camera} from 'expo-camera';
+import {useIsFocused} from '@react-navigation/native';
 
 /**
  * Screen containing camera
@@ -14,6 +15,7 @@ export const CameraScreen: React.FC<CameraStackScreenProps> = (
   const [hasPermission, setHasPermission] = useState<boolean | null>(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
   const camera = useRef<Camera>(null);
+  const isFocused = useIsFocused();
 
   useEffect(() => {
     (async () => {
@@ -32,7 +34,7 @@ export const CameraScreen: React.FC<CameraStackScreenProps> = (
   return (
     <View style={styles.view}>
       <View style={styles.container}>
-        {props.navigation.isFocused() && (
+        {isFocused && (
           <Camera style={styles.camera} type={type} ref={camera}>
             <View style={styles.buttonContainer}>
               <TouchableOpacity

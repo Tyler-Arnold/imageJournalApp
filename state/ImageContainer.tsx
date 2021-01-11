@@ -3,16 +3,18 @@ import {LogBox} from 'react-native';
 import {createContainer} from 'unstated-next';
 import {useInterval} from '../hooks/useInterval';
 
-interface Image {
+export interface ImageData {
   uri: string;
   name: string;
   description: string;
 }
 
 interface UseImageInterface {
-  images: Image[] | undefined;
-  addImage: (image: Image) => void;
-  removeImage: (image: Image) => void | React.Dispatch<Image[] | undefined>;
+  images: ImageData[] | undefined;
+  addImage: (image: ImageData) => void;
+  removeImage: (
+    image: ImageData
+  ) => void | React.Dispatch<ImageData[] | undefined>;
 }
 
 /**
@@ -20,22 +22,23 @@ interface UseImageInterface {
  * @return {UseImageInterface}
  */
 function useImage(): UseImageInterface {
-  const [images, setImages] = useState<Image[] | undefined>();
+  const [images, setImages] = useState<ImageData[] | undefined>();
 
   /**
    * Adds an image to state
-   * @param {Image} image
+   * @param {ImageData} image
    */
-  const addImage = (image: Image): void => {
+  const addImage = (image: ImageData): void => {
     images ? setImages([...images, image]) : setImages([image]);
   };
 
   /**
    * Removes an image
-   * @param {Image} image
-   * @return {void | React.Dispatch<React.SetStateAction<Image[] | undefined>>}
+   * @param {ImageData} image
+   * @return {void |
+   *  React.Dispatch<React.SetStateAction<ImageData[] | undefined>>}
    */
-  const removeImage = (image: Image) => {
+  const removeImage = (image: ImageData) => {
     return images ? setImages(images.filter((i) => i !== image)) : setImages;
   };
 

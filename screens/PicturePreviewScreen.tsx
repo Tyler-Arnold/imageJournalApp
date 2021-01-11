@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   ImageBackground,
 } from 'react-native';
+import {ImageContainer} from '../state/ImageContainer';
 import {PreviewStackScreenProps} from '../types/CameraStackScreenProps';
 
 /**
@@ -17,6 +18,8 @@ import {PreviewStackScreenProps} from '../types/CameraStackScreenProps';
 export const PicturePreviewScreen: React.FC<PreviewStackScreenProps> = (
     props: PreviewStackScreenProps,
 ) => {
+  const images = ImageContainer.useContainer();
+
   const prevImageUri = props.route.params?.image;
   const newImageUri = `${
     FileSystem.documentDirectory
@@ -43,6 +46,13 @@ export const PicturePreviewScreen: React.FC<PreviewStackScreenProps> = (
                   from: prevImageUri,
                   to: newImageUri,
                 });
+                const image = {
+                  uri: newImageUri,
+                  name: 'New Image',
+                  description: 'Description of a new image',
+                };
+                images.addImage(image);
+                props.navigation.goBack();
               }}
             >
               <Text style={styles.text}> Appronk </Text>
