@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, StyleSheet, Image, Text} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import {JournalList} from '../../components/JournalList';
 import {ImageContainer} from '../../state/ImageContainer';
 import {HomeScreenProps} from '../../types/HomeStackScreenProps';
 
@@ -35,7 +36,14 @@ export const HomeScreen: React.FC<HomeScreenProps> = (
 
   return (
     <View style={styles.view}>
-      <View style={styles.container}>{ImageIcons}</View>
+      <View style={styles.container}>
+        {ImageIcons}
+        <JournalList
+          onPressItem={(j) => {
+            j;
+          }}
+        />
+      </View>
     </View>
   );
 };

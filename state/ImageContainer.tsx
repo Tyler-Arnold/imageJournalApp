@@ -10,6 +10,7 @@ export interface ImageData {
 }
 
 export interface JournalData {
+  id: number;
   name: string;
   description: string;
   images: ImageData[] | undefined;

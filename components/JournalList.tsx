@@ -3,14 +3,20 @@ import {ImageContainer, JournalData} from '../state/ImageContainer';
 import React from 'react';
 import {Image, Text, View} from 'react-native';
 
+interface JournalListItemProps extends JournalData {
+  onPressItem: (j: JournalData) => void;
+}
+
 /**
  * Renders a journal
  * @param {JournalData} j
- * @return {React.FC<JournalData>}
+ * @return {React.FC<JournalListItemProps>}
  */
-const journalListItem: React.FC<JournalData> = (j: JournalData) => {
+const journalListItem: React.FC<JournalListItemProps> = (
+    j: JournalListItemProps,
+) => {
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={() => j.onPressItem(j)}>
       <Text>{j.name}</Text>
       <View>
         {j.images ? (
@@ -23,20 +29,27 @@ const journalListItem: React.FC<JournalData> = (j: JournalData) => {
   );
 };
 
+interface JournalListProps {
+  onPressItem: (j: JournalData) => void;
+}
+
 /**
  * List of journals
+ * @param {JournalListProps} props
  * @return {React.FC<JournalData[]>}
  */
-export const JournalList: React.FC<JournalData[]> = () => {
+export const JournalList: React.FC<JournalListProps> = (
+    props: JournalListProps,
+) => {
   const imgState = ImageContainer.useContainer();
   const journals = imgState.journals;
   return (
-    <>
-      <FlatList
-        data={journals}
-        renderItem={(j) => journalListItem(j.item)}
-        keyExtractor={(j) => j.name}
-      />
-    </>
+    <FlatList
+      data={journals}
+      renderItem={(j) =>
+        journalListItem({...j.item, onPressItem: props.onPressItem})
+      }
+      keyExtractor={(j) => j.id.toString()}
+    />
   );
 };

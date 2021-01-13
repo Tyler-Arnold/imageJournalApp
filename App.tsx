@@ -8,7 +8,6 @@ import {
   DarkTheme,
 } from '@react-navigation/native';
 import {BeachMapScreen} from './screens/BeachMapScreen';
-import {HomeScreen} from './screens/homeStack/HomeScreen';
 import {RootParamsType} from './types/RootParamsType';
 import {BeachContainer} from './state/BeachContainer';
 import {homeIcon, mapIcon} from './components/DrawerIcons';
