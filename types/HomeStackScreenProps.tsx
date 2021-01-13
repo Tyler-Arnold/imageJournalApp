@@ -5,7 +5,9 @@ import {StackScreenProps} from '@react-navigation/stack';
 type RootParamsType = {
   Home: undefined;
   View: { image: string };
+  Journal: { id: number };
 };
 
 export type HomeScreenProps = StackScreenProps<RootParamsType, 'Home'>;
 export type ViewScreenProps = StackScreenProps<RootParamsType, 'View'>;
+export type JournalScreenProps = StackScreenProps<RootParamsType, 'Journal'>;

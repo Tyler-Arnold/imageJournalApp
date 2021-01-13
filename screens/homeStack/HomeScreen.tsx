@@ -40,7 +40,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = (
         {ImageIcons}
         <JournalList
           onPressItem={(j) => {
-            j;
+            props.navigation.navigate('Journal', {id: j.id});
           }}
         />
       </View>
