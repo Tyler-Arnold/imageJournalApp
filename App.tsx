@@ -12,6 +12,14 @@ import {homeIcon, mapIcon} from './components/DrawerIcons';
 import {CameraStackScreen} from './screens/camStack/CameraStackScreen';
 import {ImageContainer} from './state/ImageContainer';
 import {HomeStackScreen} from './screens/homeStack/HomeStackScreen';
+import {
+  FirebaseAuthConsumer,
+  FirebaseAuthProvider,
+} from '@react-firebase/auth';
+import firebase from 'firebase';
+import 'firebase/auth';
+import {firebaseConfig} from './FirebaseConfig';
+import {LoginScreen} from './screens/loginStack/LoginScreen';
 
 /**
  * Entry point for the program
@@ -22,30 +30,42 @@ const App: React.FC = () => {
   const scheme = useColorScheme();
 
   return (
-    <ImageContainer.Provider>
-      <AppearanceProvider>
-        <NavigationContainer
-          theme={scheme === 'dark' ? DarkTheme : DefaultTheme}
-        >
-          <Tab.Navigator initialRouteName="Home">
-            <Tab.Screen
-              name="Home"
-              component={HomeStackScreen}
-              options={{
-                tabBarIcon: homeIcon,
-              }}
-            />
-            <Tab.Screen
-              name="Camera"
-              component={CameraStackScreen}
-              options={{
-                tabBarIcon: mapIcon,
-              }}
-            />
-          </Tab.Navigator>
-        </NavigationContainer>
-      </AppearanceProvider>
-    </ImageContainer.Provider>
+    <FirebaseAuthProvider firebase={firebase} {...firebaseConfig}>
+      <ImageContainer.Provider>
+        <AppearanceProvider>
+          <NavigationContainer
+            theme={scheme === 'dark' ? DarkTheme : DefaultTheme}
+          >
+            <Tab.Navigator initialRouteName="Home">
+              <FirebaseAuthConsumer>
+                {(isSignedIn) => {
+                  isSignedIn ? (
+                    <>
+                      <Tab.Screen
+                        name="Home"
+                        component={HomeStackScreen}
+                        options={{
+                          tabBarIcon: homeIcon,
+                        }}
+                      />
+                      <Tab.Screen
+                        name="Camera"
+                        component={CameraStackScreen}
+                        options={{
+                          tabBarIcon: mapIcon,
+                        }}
+                      />
+                    </>
+                  ) : (
+                    <Tab.Screen name="Login" component={LoginScreen} />
+                  );
+                }}
+              </FirebaseAuthConsumer>
+            </Tab.Navigator>
+          </NavigationContainer>
+        </AppearanceProvider>
+      </ImageContainer.Provider>
+    </FirebaseAuthProvider>
   );
 };
 
