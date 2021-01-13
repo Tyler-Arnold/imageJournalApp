@@ -1,4 +1,4 @@
-import {Image, Text, View} from 'react-native';
+import {Image, Text, View, StyleSheet} from 'react-native';
 import React from 'react';
 import {ImageContainer} from '../../state/ImageContainer';
 import {JournalScreenProps} from '../../types/HomeStackScreenProps';
@@ -25,9 +25,9 @@ export const ViewJournalScreen: React.FC<JournalScreenProps> = (
   }
 
   return (
-    <View>
-      <Image source={{uri: curJournal.images[0].uri}} />
-      <View>
+    <View style={styles.screenView}>
+      <Image source={{uri: curJournal.images[0].uri}} style={styles.image} />
+      <View style={styles.description}>
         <Text>{curJournal.id}</Text>
         <Text>{curJournal.name}</Text>
         <Text>{curJournal.description}</Text>
@@ -36,3 +36,15 @@ export const ViewJournalScreen: React.FC<JournalScreenProps> = (
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  screenView: {
+    flex: 1,
+  },
+  image: {
+    flex: 0.8,
+  },
+  description: {
+    flex: 0.2,
+  },
+});
