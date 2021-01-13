@@ -12,7 +12,7 @@ import {ScrollView} from 'react-native-gesture-handler';
 import MapView, {Marker} from 'react-native-maps';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {JournalList} from '../../components/JournalList';
-import {ImageContainer} from '../../state/ImageContainer';
+import {ImageContainer, JournalData} from '../../state/ImageContainer';
 import {ViewScreenProps} from '../../types/HomeStackScreenProps';
 
 /**
@@ -31,6 +31,30 @@ export const ViewImageScreen: React.FC<ViewScreenProps> = (
   if (!curImage) {
     return <Text>why is there no image</Text>;
   }
+
+  /**
+   * Handles the creation of a new Journal
+   */
+  const handleNewJournal = () => {
+    const newJournalId = imgState.journals?.length ?? 0;
+    imgState.addJournal({
+      id: newJournalId,
+      name: 'Test',
+      description: 'test description',
+      images: [curImage],
+    });
+    props.navigation.navigate('Journal', {id: newJournalId});
+  };
+
+  /**
+   * Handle adding an image to a journal
+   * @param {JournalData} j journal to add to
+   */
+  const handleAddToJournal = (j: JournalData): void => {
+    imgState.addImgToJournal(j, curImage);
+    setModalVisible(false);
+    props.navigation.navigate('Journal', {id: j.id});
+  };
 
   return (
     <SafeAreaView style={styles.screenView}>
@@ -69,17 +93,7 @@ export const ViewImageScreen: React.FC<ViewScreenProps> = (
       </MapView>
 
       <View style={styles.buttView}>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() =>
-            imgState.addJournal({
-              id: imgState.journals?.length ?? 0,
-              name: 'Test',
-              description: 'test description',
-              images: [curImage],
-            })
-          }
-        >
+        <TouchableOpacity style={styles.button} onPress={handleNewJournal}>
           <Text style={styles.text}>Create New Journal</Text>
         </TouchableOpacity>
 
@@ -98,12 +112,7 @@ export const ViewImageScreen: React.FC<ViewScreenProps> = (
         onRequestClose={() => setModalVisible(false)}
       >
         <View style={styles.modal}>
-          <JournalList
-            onPressItem={(j) => {
-              imgState.addImgToJournal(j, curImage);
-              setModalVisible(false);
-            }}
-          />
+          <JournalList onPressItem={handleAddToJournal} />
           <TouchableOpacity
             onPress={() => setModalVisible(false)}
             style={styles.button}
