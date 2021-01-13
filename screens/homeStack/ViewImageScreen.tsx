@@ -116,7 +116,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginHorizontal: 10,
     marginVertical: 90,
-    padding: 20,
+    paddingVertical: 10,
+    paddingHorizontal: 5,
     backgroundColor: 'white',
   },
 });
