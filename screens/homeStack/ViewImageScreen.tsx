@@ -2,8 +2,8 @@ import React from 'react';
 import {ImageBackground, View, StyleSheet, Text} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {ImageContainer} from '../state/ImageContainer';
-import {ViewScreenProps} from '../types/HomeStackScreenProps';
+import {ImageContainer} from '../../state/ImageContainer';
+import {ViewScreenProps} from '../../types/HomeStackScreenProps';
 
 /**
  * Screen for viewing an image and it's attributes

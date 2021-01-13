@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
-import {CameraStackScreenProps} from '../types/CameraStackScreenProps';
+import {CameraStackScreenProps} from '../../types/CameraStackScreenProps';
 import {Camera} from 'expo-camera';
 import {useIsFocused} from '@react-navigation/native';
 

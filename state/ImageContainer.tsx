@@ -60,9 +60,11 @@ export const ImageContainer = createContainer(useImage);
 
 /**
  * Handles basic interactions for journals
- *
  * @param {(JournalData[] | undefined)} journals
- * @param {*} setJournals
+ * @param {(React.Dispatch<
+ *  React.SetStateAction<
+ *    JournalData[] | undefined>>)} setJournals
+ * @return {*}
  */
 function journalInteractions(
     journals: JournalData[] | undefined,

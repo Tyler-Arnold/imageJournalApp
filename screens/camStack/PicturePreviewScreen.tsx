@@ -7,8 +7,8 @@ import {
   TouchableOpacity,
   ImageBackground,
 } from 'react-native';
-import {ImageContainer} from '../state/ImageContainer';
-import {PreviewStackScreenProps} from '../types/CameraStackScreenProps';
+import {ImageContainer} from '../../state/ImageContainer';
+import {PreviewStackScreenProps} from '../../types/CameraStackScreenProps';
 
 /**
  * Screen containing camera

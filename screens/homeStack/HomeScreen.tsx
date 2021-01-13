@@ -1,8 +1,8 @@
 import React from 'react';
 import {View, StyleSheet, Image, Text} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import {ImageContainer} from '../state/ImageContainer';
-import {HomeScreenProps} from '../types/HomeStackScreenProps';
+import {ImageContainer} from '../../state/ImageContainer';
+import {HomeScreenProps} from '../../types/HomeStackScreenProps';
 
 /**
  * Screen containing the beach flatlist

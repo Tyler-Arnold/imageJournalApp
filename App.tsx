@@ -8,13 +8,13 @@ import {
   DarkTheme,
 } from '@react-navigation/native';
 import {BeachMapScreen} from './screens/BeachMapScreen';
-import {HomeScreen} from './screens/HomeScreen';
+import {HomeScreen} from './screens/homeStack/HomeScreen';
 import {RootParamsType} from './types/RootParamsType';
 import {BeachContainer} from './state/BeachContainer';
 import {homeIcon, mapIcon} from './components/DrawerIcons';
-import {CameraStackScreen} from './screens/CameraStackScreen';
+import {CameraStackScreen} from './screens/camStack/CameraStackScreen';
 import {ImageContainer} from './state/ImageContainer';
-import {HomeStackScreen} from './screens/HomeStackScreen';
+import {HomeStackScreen} from './screens/homeStack/HomeStackScreen';
 
 /**
  * Entry point for the program
