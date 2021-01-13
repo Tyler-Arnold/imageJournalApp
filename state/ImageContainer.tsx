@@ -21,6 +21,11 @@ interface UseImageInterface {
   removeImage: (
     image: ImageData
   ) => void | React.Dispatch<ImageData[] | undefined>;
+  journals: JournalData[] | undefined;
+  addJournal: (journal: JournalData) => void;
+  removeJournal: (journal: JournalData) => void | null;
+  addImgToJournal: (journal: JournalData, image: ImageData) => void | null;
+  removeImgFromJournal: (journal: JournalData, image: ImageData) => void | null;
 }
 
 /**
@@ -53,7 +58,16 @@ function useImage(): UseImageInterface {
     // twat
   }, 30000);
 
-  return {images, addImage, removeImage};
+  return {
+    images,
+    addImage,
+    removeImage,
+    journals,
+    addJournal,
+    removeJournal,
+    addImgToJournal,
+    removeImgFromJournal,
+  };
 }
 
 export const ImageContainer = createContainer(useImage);

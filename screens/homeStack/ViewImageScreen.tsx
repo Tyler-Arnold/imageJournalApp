@@ -1,6 +1,6 @@
 import React from 'react';
 import {ImageBackground, View, StyleSheet, Text} from 'react-native';
-import {ScrollView} from 'react-native-gesture-handler';
+import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {ImageContainer} from '../../state/ImageContainer';
 import {ViewScreenProps} from '../../types/HomeStackScreenProps';
@@ -33,6 +33,14 @@ export const ViewImageScreen: React.FC<ViewScreenProps> = (
           <Text>{curImage?.description}</Text>
           <Text>{curImage?.uri}</Text>
         </View>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            // open a journal modal or something
+          }}
+        >
+          <Text style={styles.text}>Add to Journal</Text>
+        </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>
   );
@@ -45,5 +53,13 @@ const styles = StyleSheet.create({
   image: {
     flex: 1,
   },
-  text: {flex: 0},
+  text: {
+    fontSize: 18,
+    color: 'grey',
+  },
+  button: {
+    flex: 0.1,
+    alignSelf: 'flex-end',
+    alignItems: 'center',
+  },
 });
