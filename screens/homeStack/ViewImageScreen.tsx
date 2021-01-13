@@ -75,7 +75,10 @@ export const ViewImageScreen: React.FC<ViewScreenProps> = (
       >
         <View style={styles.modal}>
           <JournalList
-            onPressItem={(j) => imgState.addImgToJournal(j, curImage)}
+            onPressItem={(j) => {
+              imgState.addImgToJournal(j, curImage);
+              setModalVisible(false);
+            }}
           />
           <TouchableOpacity
             onPress={() => setModalVisible(false)}

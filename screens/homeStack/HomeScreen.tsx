@@ -36,8 +36,8 @@ export const HomeScreen: React.FC<HomeScreenProps> = (
 
   return (
     <View style={styles.view}>
-      <View style={styles.container}>
-        {ImageIcons}
+      <View style={styles.imgContainer}>{ImageIcons}</View>
+      <View style={styles.journalContainer}>
         <JournalList
           onPressItem={(j) => {
             props.navigation.navigate('Journal', {id: j.id});
@@ -63,10 +63,14 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 18,
   },
-  container: {
+  imgContainer: {
     flex: 1,
     flexDirection: 'row',
     flexWrap: 'wrap',
+  },
+  journalContainer: {
+    flex: 1,
+    flexDirection: 'column',
   },
   homeImage: {
     width: 80,

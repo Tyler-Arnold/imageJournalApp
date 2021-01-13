@@ -119,7 +119,7 @@ function journalInteractions(
     return journals
       ? setJournals([
         ...journals.map((j) =>
-            j === journal
+            j.id === journal.id
               ? {...j, images: j.images ? j.images.concat([image]) : [image]}
               : j,
         ),
