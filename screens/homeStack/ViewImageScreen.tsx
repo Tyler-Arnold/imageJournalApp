@@ -6,8 +6,10 @@ import {
   Text,
   Modal,
   TouchableOpacity,
+  Dimensions,
 } from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
+import MapView, {Marker} from 'react-native-maps';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {JournalList} from '../../components/JournalList';
 import {ImageContainer} from '../../state/ImageContainer';
@@ -32,20 +34,41 @@ export const ViewImageScreen: React.FC<ViewScreenProps> = (
 
   return (
     <SafeAreaView style={styles.screenView}>
-      <ScrollView
-        style={styles.screenView}
-        contentContainerStyle={styles.screenView}
-      >
+      <ScrollView style={styles.image}>
         <ImageBackground
           source={{uri: imageUri}}
-          style={styles.image}
+          style={{
+            ...styles.image,
+            height:
+              curImage.height
+              / (curImage.width / Dimensions.get('window').width),
+            width: Dimensions.get('window').width,
+          }}
           resizeMode="contain"
         ></ImageBackground>
-        <View style={styles.image}>
-          <Text>{curImage?.name}</Text>
-          <Text>{curImage?.description}</Text>
-          <Text>{curImage?.uri}</Text>
-        </View>
+      </ScrollView>
+
+      <View style={styles.image}>
+        <Text>{curImage?.name}</Text>
+        <Text>{curImage?.description}</Text>
+        <Text>{curImage?.uri}</Text>
+      </View>
+
+      <MapView
+        style={styles.mapView}
+        initialRegion={{
+          latitude: curImage.lati,
+          longitude: curImage.long,
+          latitudeDelta: 0.02,
+          longitudeDelta: 0.02,
+        }}
+      >
+        <Marker
+          coordinate={{latitude: curImage.lati, longitude: curImage.long}}
+        />
+      </MapView>
+
+      <View style={styles.buttView}>
         <TouchableOpacity
           style={styles.button}
           onPress={() =>
@@ -66,7 +89,8 @@ export const ViewImageScreen: React.FC<ViewScreenProps> = (
         >
           <Text style={styles.text}>Add to Journal</Text>
         </TouchableOpacity>
-      </ScrollView>
+      </View>
+
       <Modal
         animationType="slide"
         transparent={true}
@@ -97,7 +121,15 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   image: {
-    flex: 1,
+    flex: 0.6,
+  },
+  mapView: {
+    flex: 0.2,
+  },
+  buttView: {
+    flex: 0.2,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   text: {
     fontSize: 18,
@@ -107,7 +139,9 @@ const styles = StyleSheet.create({
     flex: 0,
     backgroundColor: 'grey',
     elevation: 2,
-    padding: 5,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    justifyContent: 'center',
   },
   modal: {
     flex: 1,

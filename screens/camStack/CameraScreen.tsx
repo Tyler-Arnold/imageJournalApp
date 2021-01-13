@@ -3,6 +3,7 @@ import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {CameraStackScreenProps} from '../../types/CameraStackScreenProps';
 import {Camera} from 'expo-camera';
 import {useIsFocused} from '@react-navigation/native';
+import * as Location from 'expo-location';
 
 /**
  * Screen containing camera
@@ -19,8 +20,9 @@ export const CameraScreen: React.FC<CameraStackScreenProps> = (
 
   useEffect(() => {
     (async () => {
-      const {status} = await Camera.requestPermissionsAsync();
-      setHasPermission(status === 'granted');
+      const {status: camStatus} = await Camera.requestPermissionsAsync();
+      const {status: locStatus} = await Location.requestPermissionsAsync();
+      setHasPermission(camStatus === 'granted' && locStatus === 'granted');
     })();
   }, []);
 
@@ -28,7 +30,7 @@ export const CameraScreen: React.FC<CameraStackScreenProps> = (
     return <View />;
   }
   if (hasPermission === false) {
-    return <Text>No access to camera</Text>;
+    return <Text>No access to camera or location</Text>;
   }
 
   return (
@@ -56,7 +58,7 @@ export const CameraScreen: React.FC<CameraStackScreenProps> = (
                     onPictureSaved: (picture) => {
                       // picture saved, do some stuff
                       props.navigation.navigate('Preview', {
-                        image: picture.uri,
+                        image: picture,
                       });
                     },
                   });

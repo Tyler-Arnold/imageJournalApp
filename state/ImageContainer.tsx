@@ -7,6 +7,11 @@ export interface ImageData {
   uri: string;
   name: string;
   description: string;
+  width: number;
+  height: number;
+  exif?: unknown;
+  lati: number;
+  long: number;
 }
 
 export interface JournalData {
