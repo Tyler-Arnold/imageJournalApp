@@ -1,8 +1,8 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React, {useState} from 'react';
 import firebase from 'firebase';
 import 'firebase/auth';
-import {TextInput, TouchableOpacity} from 'react-native-gesture-handler';
+import {TextInput} from 'react-native-gesture-handler';
 
 /**
  * Login screen
@@ -14,19 +14,19 @@ export const LoginScreen: React.FC = () => {
   const [password, setPassword] = useState<string>();
 
   return (
-    <View>
-      <View>
+    <View style={styles.screenView}>
+      <View style={styles.formView}>
         <TextInput
           onChangeText={(t) => setEmail(t.trim())}
           value={email}
           keyboardType="email-address"
-          style={styles.loginButton}
+          style={styles.textInput}
         />
         <TextInput
           onChangeText={(p) => setPassword(p.trim())}
           value={password}
           secureTextEntry={true}
-          style={styles.loginButton}
+          style={styles.textInput}
         />
       </View>
       <TouchableOpacity
@@ -35,6 +35,7 @@ export const LoginScreen: React.FC = () => {
             ? firebase.auth().signInWithEmailAndPassword(email, password)
             : null;
         }}
+        style={styles.loginButton}
       >
         <Text>Login</Text>
       </TouchableOpacity>
@@ -43,13 +44,21 @@ export const LoginScreen: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
-  formView: {flex: 0.9},
-  loginButton: {flex: 0.1, marginHorizontal: 30, marginVertical: 10},
+  screenView: {flex: 1},
+  formView: {flex: 0.9, justifyContent: 'space-evenly'},
+  loginButton: {
+    flex: 0.1,
+    marginHorizontal: 30,
+    marginVertical: 10,
+    backgroundColor: 'grey',
+  },
   textInput: {
-    flex: 1,
     height: 40,
     borderWidth: 1,
     borderColor: 'grey',
     borderRadius: 5,
+    marginHorizontal: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
