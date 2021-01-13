@@ -1,7 +1,8 @@
-import {Image, Text, View, StyleSheet} from 'react-native';
+import {Image, Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 import React from 'react';
 import {ImageContainer} from '../../state/ImageContainer';
 import {JournalScreenProps} from '../../types/HomeStackScreenProps';
+import {FirestoreMutation} from '@react-firebase/firestore';
 
 /**
  * Screen for viewing a journal
@@ -26,13 +27,42 @@ export const ViewJournalScreen: React.FC<JournalScreenProps> = (
 
   return (
     <View style={styles.screenView}>
-      <Image source={{uri: curJournal.images[0].uri}} style={styles.image} />
-      <View style={styles.description}>
-        <Text>{curJournal.id}</Text>
-        <Text>{curJournal.name}</Text>
-        <Text>{curJournal.description}</Text>
-        <Text>Images: {curJournal.images.length}</Text>
-      </View>
+      <FirestoreMutation type="add" path="/journals/">
+        {({runMutation}) => {
+          return (
+            <View style={styles.screenView}>
+              <Image
+                source={{uri: curJournal.images![0].uri}}
+                style={styles.image}
+              />
+              <View style={styles.description}>
+                <Text>{curJournal.key}</Text>
+                <Text>{curJournal.name}</Text>
+                <Text>{curJournal.description}</Text>
+                <Text>Images: {curJournal.images!.length}</Text>
+              </View>
+              <TouchableOpacity
+                style={styles.publishButton}
+                onPress={() =>
+                  runMutation({
+                    id: curJournal.id,
+                    name: curJournal.name,
+                    description: curJournal.description,
+                  }).then((res) => {
+                    if (res.key) {
+                      imgState.removeJournal(curJournal);
+                      imgState.addJournal({...curJournal, key: res.key});
+                    }
+                    return console.log('ran mutation', res);
+                  })
+                }
+              >
+                <Text>Make Public</Text>
+              </TouchableOpacity>
+            </View>
+          );
+        }}
+      </FirestoreMutation>
     </View>
   );
 };
@@ -42,9 +72,17 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   image: {
-    flex: 0.8,
+    flex: 0.7,
   },
   description: {
     flex: 0.2,
+  },
+  publishButton: {
+    flex: 0.1,
+    backgroundColor: 'lightgrey',
+    marginHorizontal: 30,
+    marginVertical: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });

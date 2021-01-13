@@ -8,6 +8,7 @@ import 'firebase/auth';
 import {firebaseConfig} from './FirebaseConfig';
 import {UserContainer} from './state/UserContainer';
 import {Navigation} from './Navigation';
+import {FirestoreProvider} from '@react-firebase/firestore';
 
 /**
  * Entry point for the program
@@ -16,13 +17,15 @@ import {Navigation} from './Navigation';
 const App: React.FC = () => {
   return (
     <FirebaseAuthProvider firebase={firebase} {...firebaseConfig}>
-      <UserContainer.Provider>
-        <ImageContainer.Provider>
-          <AppearanceProvider>
-            <Navigation />
-          </AppearanceProvider>
-        </ImageContainer.Provider>
-      </UserContainer.Provider>
+      <FirestoreProvider firebase={firebase} {...firebaseConfig}>
+        <UserContainer.Provider>
+          <ImageContainer.Provider>
+            <AppearanceProvider>
+              <Navigation />
+            </AppearanceProvider>
+          </ImageContainer.Provider>
+        </UserContainer.Provider>
+      </FirestoreProvider>
     </FirebaseAuthProvider>
   );
 };
