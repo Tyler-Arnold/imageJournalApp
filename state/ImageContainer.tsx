@@ -73,6 +73,10 @@ function useImage(): UseImageInterface {
 
 export const ImageContainer = createContainer(useImage);
 
+type JournalState = React.Dispatch<
+  React.SetStateAction<JournalData[] | undefined>
+>;
+
 /**
  * Handles basic interactions for journals
  * @param {(JournalData[] | undefined)} journals
@@ -83,7 +87,7 @@ export const ImageContainer = createContainer(useImage);
  */
 function journalInteractions(
     journals: JournalData[] | undefined,
-    setJournals: React.Dispatch<React.SetStateAction<JournalData[] | undefined>>,
+    setJournals: JournalState,
 ) {
   /**
    * Adds a journal
