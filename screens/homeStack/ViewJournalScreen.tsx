@@ -1,5 +1,5 @@
 import {Image, Text, View} from 'react-native';
-import React, {useState} from 'react';
+import React from 'react';
 import {ImageContainer} from '../../state/ImageContainer';
 import {JournalScreenProps} from '../../types/HomeStackScreenProps';
 
