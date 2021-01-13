@@ -80,9 +80,7 @@ type JournalState = React.Dispatch<
 /**
  * Handles basic interactions for journals
  * @param {(JournalData[] | undefined)} journals
- * @param {(React.Dispatch<
- *  React.SetStateAction<
- *    JournalData[] | undefined>>)} setJournals
+ * @param {JournalState} setJournals
  * @return {*}
  */
 function journalInteractions(
