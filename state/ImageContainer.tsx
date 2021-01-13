@@ -34,6 +34,7 @@ interface UseImageInterface {
   removeJournal: (journal: JournalData) => void | null;
   addImgToJournal: (journal: JournalData, image: ImageData) => void | null;
   removeImgFromJournal: (journal: JournalData, image: ImageData) => void | null;
+  updateJournalKey: (journal: JournalData, newKey: string) => void | null;
 }
 
 /**
@@ -51,6 +52,7 @@ function useImage(): UseImageInterface {
     removeJournal,
     addImgToJournal,
     removeImgFromJournal,
+    updateJournalKey,
   } = journalInteractions(journals, setJournals);
 
   // ignore this warning because our mock api refreshes on a long timer
@@ -75,6 +77,7 @@ function useImage(): UseImageInterface {
     removeJournal,
     addImgToJournal,
     removeImgFromJournal,
+    updateJournalKey,
   };
 }
 
@@ -157,7 +160,27 @@ function journalInteractions(
       : null;
   };
 
-  return {addJournal, removeJournal, addImgToJournal, removeImgFromJournal};
+  /**
+   * Updates a journal in state with it's key in firestore
+   * @param {JournalData} journal
+   * @param {string} newKey
+   * @return {*}
+   */
+  const updateJournalKey = (journal: JournalData, newKey: string) => {
+    return journals
+      ? setJournals([
+        ...journals.map((j) => (j === journal ? {...j, key: newKey} : j)),
+      ])
+      : null;
+  };
+
+  return {
+    addJournal,
+    removeJournal,
+    addImgToJournal,
+    removeImgFromJournal,
+    updateJournalKey,
+  };
 }
 
 /**

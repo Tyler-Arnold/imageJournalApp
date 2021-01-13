@@ -50,8 +50,7 @@ export const ViewJournalScreen: React.FC<JournalScreenProps> = (
                     description: curJournal.description,
                   }).then((res) => {
                     if (res.key) {
-                      imgState.removeJournal(curJournal);
-                      imgState.addJournal({...curJournal, key: res.key});
+                      imgState.updateJournalKey(curJournal, res.key);
                     }
                     return console.log('ran mutation', res);
                   })
