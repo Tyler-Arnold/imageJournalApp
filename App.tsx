@@ -7,9 +7,7 @@ import {
   DefaultTheme,
   DarkTheme,
 } from '@react-navigation/native';
-import {BeachMapScreen} from './screens/BeachMapScreen';
 import {RootParamsType} from './types/RootParamsType';
-import {BeachContainer} from './state/BeachContainer';
 import {homeIcon, mapIcon} from './components/DrawerIcons';
 import {CameraStackScreen} from './screens/camStack/CameraStackScreen';
 import {ImageContainer} from './state/ImageContainer';
@@ -25,37 +23,28 @@ const App: React.FC = () => {
 
   return (
     <ImageContainer.Provider>
-      <BeachContainer.Provider>
-        <AppearanceProvider>
-          <NavigationContainer
-            theme={scheme === 'dark' ? DarkTheme : DefaultTheme}
-          >
-            <Tab.Navigator initialRouteName="Home">
-              <Tab.Screen
-                name="Home"
-                component={HomeStackScreen}
-                options={{
-                  tabBarIcon: homeIcon,
-                }}
-              />
-              <Tab.Screen
-                name="BeachMap"
-                component={BeachMapScreen}
-                options={{
-                  tabBarIcon: mapIcon,
-                }}
-              />
-              <Tab.Screen
-                name="Camera"
-                component={CameraStackScreen}
-                options={{
-                  tabBarIcon: mapIcon,
-                }}
-              />
-            </Tab.Navigator>
-          </NavigationContainer>
-        </AppearanceProvider>
-      </BeachContainer.Provider>
+      <AppearanceProvider>
+        <NavigationContainer
+          theme={scheme === 'dark' ? DarkTheme : DefaultTheme}
+        >
+          <Tab.Navigator initialRouteName="Home">
+            <Tab.Screen
+              name="Home"
+              component={HomeStackScreen}
+              options={{
+                tabBarIcon: homeIcon,
+              }}
+            />
+            <Tab.Screen
+              name="Camera"
+              component={CameraStackScreen}
+              options={{
+                tabBarIcon: mapIcon,
+              }}
+            />
+          </Tab.Navigator>
+        </NavigationContainer>
+      </AppearanceProvider>
     </ImageContainer.Provider>
   );
 };
