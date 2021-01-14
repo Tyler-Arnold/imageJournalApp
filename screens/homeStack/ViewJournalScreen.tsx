@@ -6,12 +6,15 @@ import {
   StyleSheet,
   TouchableOpacity,
   Alert,
+  FlatList,
+  Dimensions,
 } from 'react-native';
 import React from 'react';
 import {ImageContainer} from '../../state/ImageContainer';
 import {JournalScreenProps} from '../../types/HomeStackScreenProps';
 import {FirestoreBatchedWrite} from '@react-firebase/firestore';
 import firebase from 'firebase';
+import {SocialContainer} from '../../state/SocialImageContainer';
 
 /**
  * Screen for viewing a journal
@@ -22,6 +25,7 @@ export const ViewJournalScreen: React.FC<JournalScreenProps> = (
     props: JournalScreenProps,
 ) => {
   const imgState = ImageContainer.useContainer();
+  const socState = SocialContainer.useContainer();
   const curJournal = imgState.journals?.find(
       (j) => j.id === props.route.params.id,
   );
@@ -40,9 +44,25 @@ export const ViewJournalScreen: React.FC<JournalScreenProps> = (
         {({addMutationToBatch, commit}) => {
           return (
             <View style={styles.screenView}>
-              <Image
-                source={{uri: curJournal.images![0].uri}}
-                style={styles.image}
+              <FlatList
+                data={curJournal.images}
+                renderItem={(i) => (
+                  <Image
+                    source={{uri: i.item.uri}}
+                    style={{
+                      ...styles.image,
+                      height:
+                        i.item.height
+                        / (i.item.width / Dimensions.get('window').width),
+                      width: Dimensions.get('window').width,
+                    }}
+                    key={i.index}
+                    resizeMode={'contain'}
+                  />
+                )}
+                horizontal={true}
+                keyExtractor={(i) => i.key}
+                style={styles.imageView}
               />
               <View style={styles.description}>
                 <Text>{curJournal.key}</Text>
@@ -98,9 +118,10 @@ export const ViewJournalScreen: React.FC<JournalScreenProps> = (
                   });
                   setTimeout(() => {
                     commit().then(() => {
+                      socState.triggerGetData();
                       return Alert.alert('Data uploaded probably!');
                     });
-                  }, 2000);
+                  }, 4000);
                 }}
               >
                 <Text>Make Public</Text>
@@ -117,8 +138,14 @@ const styles = StyleSheet.create({
   screenView: {
     flex: 1,
   },
-  image: {
+  imageView: {
     flex: 0.7,
+    flexDirection: 'row',
+  },
+  image: {
+    flex: 1,
+    marginHorizontal: 10,
+    backgroundColor: 'lightgrey',
   },
   description: {
     flex: 0.2,

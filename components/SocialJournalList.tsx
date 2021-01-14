@@ -36,8 +36,7 @@ export const SocialJournalList: React.FC<JournalListProps> = (
    * @return {React.FC<ImageData>}
    */
   const carouselItem: React.FC<FirestoreImage> = (i: FirestoreImage) => {
-    const imagePath = `${i.path}?alt=media`;
-    Alert.alert('image', imagePath);
+    const imagePath = i.path;
     return <Image source={{uri: imagePath}} style={styles.carouselImg} />;
   };
 

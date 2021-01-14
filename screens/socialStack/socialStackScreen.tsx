@@ -14,7 +14,7 @@ export const SocialStackScreen: React.FC = () => {
 
   return (
     <SocialStack.Navigator>
-      <SocialStack.Screen name="SocialMap" component={SocialMapScreen} />
+      <SocialStack.Screen name="Social" component={SocialMapScreen} />
       <SocialStack.Screen
         name="ViewJournal"
         component={ViewSocialJournalScreen}

@@ -1,6 +1,7 @@
 import firebase from 'firebase';
 import {useState} from 'react';
 import {createContainer} from 'unstated-next';
+import {Image} from 'react-native';
 
 export interface FirestoreJournal {
   name: string;
@@ -16,6 +17,8 @@ export interface FirestoreImage {
   lati: number;
   long: number;
   path: string;
+  width: number;
+  height: number;
 }
 
 /**
@@ -103,9 +106,19 @@ const useSocial = () => {
                         long: img.data()?.long as number,
                         path: `https://firebasestorage.googleapis.com/v0/b/image-journal-22858.appspot.com/o/${encodeURIComponent(
                       img.data()?.path as string,
-                        )}`,
+                        )}?alt=media`,
+                        width: 1000,
+                        height: 1000,
                       };
-                      tempJournals[index].images.push(newImage);
+                      Image.getSize(
+                          newImage.path,
+                          (w, h) => {
+                            newImage.width = w;
+                            newImage.height = h;
+                            tempJournals[index].images.push(newImage);
+                          },
+                          () => tempJournals[index].images.push(newImage),
+                      );
                     });
               });
             });

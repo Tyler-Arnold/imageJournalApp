@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import {Image, Text, View, StyleSheet} from 'react-native';
+import {Image, Text, View, StyleSheet, Dimensions} from 'react-native';
 import React from 'react';
 import {SocialJournalScreenProps} from '../../types/SocialStackScreenProps';
 import {SocialContainer} from '../../state/SocialImageContainer';
+import {FlatList} from 'react-native-gesture-handler';
 
 /**
  * Screen for viewing a journal
@@ -27,17 +28,32 @@ export const ViewSocialJournalScreen: React.FC<SocialJournalScreenProps> = (
 
   return (
     <View style={styles.screenView}>
-      <View style={styles.screenView}>
-        <Image
-          source={{uri: curJournal.images![0].path}}
-          style={styles.image}
+      <View style={styles.imageView}>
+        <FlatList
+          data={curJournal.images}
+          renderItem={(i) => (
+            <Image
+              source={{uri: i.item.path}}
+              style={{
+                ...styles.image,
+                height:
+                  i.item.height
+                  / (i.item.width / Dimensions.get('window').width),
+                width: Dimensions.get('window').width,
+              }}
+              key={i.index}
+              resizeMode={'contain'}
+            />
+          )}
+          horizontal={true}
+          keyExtractor={(i) => i.path}
         />
-        <View style={styles.description}>
-          <Text>{curJournal.key}</Text>
-          <Text>{curJournal.name}</Text>
-          <Text>{curJournal.description}</Text>
-          <Text>Images: {curJournal.images!.length}</Text>
-        </View>
+      </View>
+      <View style={styles.description}>
+        <Text>{curJournal.key}</Text>
+        <Text>{curJournal.name}</Text>
+        <Text>{curJournal.description}</Text>
+        <Text>Images: {curJournal.images!.length}</Text>
       </View>
     </View>
   );
@@ -47,8 +63,14 @@ const styles = StyleSheet.create({
   screenView: {
     flex: 1,
   },
-  image: {
+  imageView: {
     flex: 0.7,
+    flexDirection: 'row',
+  },
+  image: {
+    flex: 1,
+    marginHorizontal: 10,
+    backgroundColor: 'lightgrey',
   },
   description: {
     flex: 0.2,
