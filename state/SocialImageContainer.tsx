@@ -7,7 +7,7 @@ export interface FirestoreJournal {
   description: string;
   id: number;
   key: string;
-  images?: FirestoreImage[];
+  images: FirestoreImage[];
 }
 
 export interface FirestoreImage {
@@ -75,14 +75,14 @@ const useSocial = () => {
           description: d.data().description as string,
           id: d.data().id as number,
           key: d.ref.path.split('/').pop()! as string,
+          images: [],
         };
         tempJournals.push(newJournal);
-        addSocialJournal(newJournal);
       });
     });
 
     setTimeout(() => {
-      tempJournals?.forEach((sj) => {
+      tempJournals?.forEach((sj, index) => {
         firebase
             .firestore()
             .collectionGroup('journalImages')
@@ -95,19 +95,23 @@ const useSocial = () => {
                     .doc(d.data().image as string)
                     .get()
                     .then((img) => {
-                      addImageToJournal(
-                          {
-                            name: img.data()?.name as string,
-                            description: img.data()?.description as string,
-                            lati: img.data()?.lati as number,
-                            long: img.data()?.long as number,
-                            path: img.data()?.path as string,
-                          },
-                          sj,
-                      );
+                      const newImage = {
+                        name: img.data()?.name as string,
+                        description: img.data()?.description as string,
+                        lati: img.data()?.lati as number,
+                        long: img.data()?.long as number,
+                        path: `https://firebasestorage.googleapis.com/v0/b/image-journal-22858.appspot.com/o/${encodeURIComponent(
+                      img.data()?.path as string,
+                        )}`,
+                      };
+                      tempJournals[index].images.push(newImage);
                     });
               });
             });
+
+        setTimeout(() => {
+          setSocialJournals(tempJournals);
+        }, 5000);
       });
     }, 2000);
   };

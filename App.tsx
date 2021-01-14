@@ -9,6 +9,7 @@ import {firebaseConfig} from './FirebaseConfig';
 import {UserContainer} from './state/UserContainer';
 import {Navigation} from './Navigation';
 import {FirestoreProvider} from '@react-firebase/firestore';
+import {SocialContainer} from './state/SocialImageContainer';
 
 /**
  * Entry point for the program
@@ -20,9 +21,11 @@ const App: React.FC = () => {
       <FirestoreProvider firebase={firebase} {...firebaseConfig}>
         <UserContainer.Provider>
           <ImageContainer.Provider>
-            <AppearanceProvider>
-              <Navigation />
-            </AppearanceProvider>
+            <SocialContainer.Provider>
+              <AppearanceProvider>
+                <Navigation />
+              </AppearanceProvider>
+            </SocialContainer.Provider>
           </ImageContainer.Provider>
         </UserContainer.Provider>
       </FirestoreProvider>

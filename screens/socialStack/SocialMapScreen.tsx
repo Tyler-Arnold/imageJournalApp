@@ -1,8 +1,10 @@
-import React, {useEffect} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import React, {useCallback, useEffect, useState} from 'react';
+import {Alert, StyleSheet, Text, View} from 'react-native';
 import MapView, {Marker} from 'react-native-maps';
 import {SocialMapScreenProps} from '../../types/SocialStackScreenProps';
 import {SocialContainer} from '../../state/SocialImageContainer';
+import {JournalList} from '../../components/JournalList';
+import {SocialJournalList} from '../../components/SocialJournalList';
 
 /**
  * Social map screen
@@ -17,37 +19,7 @@ export const SocialMapScreen: React.FC<SocialMapScreenProps> = (
 
   return (
     <View style={styles.screenView}>
-      <Text
-        style={styles.screenView}
-        onPress={() => socialState.triggerGetData()}
-      >
-        {JSON.stringify(socialState.socialJournals)}
-      </Text>
-      <MapView
-        style={styles.mapView}
-        region={{
-          latitude:
-            socialState.socialJournals?.pop()?.images?.pop()?.lati
-            ?? 50.7411413,
-          longitude:
-            socialState.socialJournals?.pop()?.images?.pop()?.long
-            ?? -1.8756891,
-          latitudeDelta: 0.02,
-          longitudeDelta: 0.02,
-        }}
-      >
-        {socialState.socialJournals?.map((sj) => {
-          const imgs = sj.images;
-          imgs ? (
-            <Marker
-              coordinate={{
-                latitude: imgs[0].lati,
-                longitude: imgs[0].lati,
-              }}
-            />
-          ) : null;
-        })}
-      </MapView>
+      <SocialJournalList onPressItem={(j) => {}} />
     </View>
   );
 };
