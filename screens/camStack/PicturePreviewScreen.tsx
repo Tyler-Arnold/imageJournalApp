@@ -26,6 +26,32 @@ export const PicturePreviewScreen: React.FC<PreviewStackScreenProps> = (
   const newImageUri = `${
     FileSystem.documentDirectory
   }journalImages/${prevImageUri.split('/').pop()}`;
+
+  /**
+   * Handles approving an image, saving etc
+   */
+  const handleApproveImage = async () => {
+    FileSystem.copyAsync({
+      from: prevImageUri,
+      to: newImageUri,
+    });
+    const location = await Location.getCurrentPositionAsync();
+    const image = {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      key: newImageUri.split('/').pop()!.split('.')[0],
+      uri: newImageUri,
+      name: 'New Image',
+      description: 'Description of a new image',
+      width: newImage.width,
+      height: newImage.height,
+      exif: newImage.exif,
+      lati: location.coords.latitude,
+      long: location.coords.longitude,
+    };
+    images.addImage(image);
+    props.navigation.goBack();
+  };
+
   return (
     <View style={styles.view}>
       <View style={styles.container}>
@@ -43,25 +69,7 @@ export const PicturePreviewScreen: React.FC<PreviewStackScreenProps> = (
 
             <TouchableOpacity
               style={styles.button}
-              onPress={async () => {
-                FileSystem.copyAsync({
-                  from: prevImageUri,
-                  to: newImageUri,
-                });
-                const location = await Location.getCurrentPositionAsync();
-                const image = {
-                  uri: newImageUri,
-                  name: 'New Image',
-                  description: 'Description of a new image',
-                  width: newImage.width,
-                  height: newImage.height,
-                  exif: newImage.exif,
-                  lati: location.coords.latitude,
-                  long: location.coords.longitude,
-                };
-                images.addImage(image);
-                props.navigation.goBack();
-              }}
+              onPress={handleApproveImage}
             >
               <Text style={styles.text}> Appronk </Text>
             </TouchableOpacity>

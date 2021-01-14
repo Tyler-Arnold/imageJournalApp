@@ -6,6 +6,6 @@ export const firebaseConfig = {
   databaseURL: "image-journal-22858.firebaseio.com",
   authDomain: "image-journal-22858.firebaseapp.com",
   // OPTIONAL
-  storageBucket: "STORAGE_BUCKET",
-  messagingSenderId: "MESSAGING_SENDER_ID",
+  storageBucket: "image-journal-22858.appspot.com",
+  messagingSenderId: "290095360587",
 };

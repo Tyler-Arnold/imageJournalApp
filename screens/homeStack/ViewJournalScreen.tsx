@@ -1,8 +1,17 @@
-import {Image, Text, View, StyleSheet, TouchableOpacity} from 'react-native';
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+import {
+  Image,
+  Text,
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  Alert,
+} from 'react-native';
 import React from 'react';
 import {ImageContainer} from '../../state/ImageContainer';
 import {JournalScreenProps} from '../../types/HomeStackScreenProps';
-import {FirestoreMutation} from '@react-firebase/firestore';
+import {FirestoreBatchedWrite} from '@react-firebase/firestore';
+import firebase from 'firebase';
 
 /**
  * Screen for viewing a journal
@@ -27,8 +36,8 @@ export const ViewJournalScreen: React.FC<JournalScreenProps> = (
 
   return (
     <View style={styles.screenView}>
-      <FirestoreMutation type="add" path="/journals/">
-        {({runMutation}) => {
+      <FirestoreBatchedWrite>
+        {({addMutationToBatch, commit}) => {
           return (
             <View style={styles.screenView}>
               <Image
@@ -43,25 +52,63 @@ export const ViewJournalScreen: React.FC<JournalScreenProps> = (
               </View>
               <TouchableOpacity
                 style={styles.publishButton}
-                onPress={() =>
-                  runMutation({
-                    id: curJournal.id,
-                    name: curJournal.name,
-                    description: curJournal.description,
-                  }).then((res) => {
-                    if (res.key) {
-                      imgState.updateJournalKey(curJournal, res.key);
-                    }
-                    return console.log('ran mutation', res);
-                  })
-                }
+                onPress={() => {
+                  addMutationToBatch({
+                    path: `/journals/${curJournal.key}`,
+                    value: {
+                      id: curJournal.id,
+                      name: curJournal.name,
+                      description: curJournal.description,
+                    },
+                    type: 'set',
+                  });
+
+                  curJournal.images?.map(async (i) => {
+                    const storageRef = firebase.storage().ref();
+                    const storeImgPath = `images/${
+                      i.key.split('.')[0]
+                    }${i.name.replace(' ', '-')}.${i.uri.split('.').pop()!}`;
+                    const imgRef = storageRef.child(storeImgPath);
+                    const response = await fetch(i.uri);
+                    const blob = await response.blob();
+
+                    const task = imgRef.put(blob);
+                    task.then(() =>
+                      Alert.alert(`Upload successful: ${i.name}`),
+                    );
+                    addMutationToBatch({
+                      path: `/images/${i.key}`,
+                      value: {
+                        name: i.name,
+                        description: i.description,
+                        lati: i.lati,
+                        long: i.long,
+                        path: storeImgPath,
+                      },
+                      type: 'set',
+                    });
+                    addMutationToBatch({
+                      path: `journalImages/${i.key}${curJournal.key}`,
+                      value: {
+                        image: `/images/${i.key}`,
+                        journal: `/journals/${curJournal.key}`,
+                      },
+                      type: 'set',
+                    });
+                  });
+                  setTimeout(() => {
+                    commit().then(() => {
+                      return Alert.alert('Data uploaded probably!');
+                    });
+                  }, 2000);
+                }}
               >
                 <Text>Make Public</Text>
               </TouchableOpacity>
             </View>
           );
         }}
-      </FirestoreMutation>
+      </FirestoreBatchedWrite>
     </View>
   );
 };

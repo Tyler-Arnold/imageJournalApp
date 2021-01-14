@@ -4,7 +4,7 @@ import {createContainer} from 'unstated-next';
 import {useInterval} from '../hooks/useInterval';
 
 export interface ImageData {
-  key?: string;
+  key: string;
   uri: string;
   name: string;
   description: string;
@@ -16,7 +16,7 @@ export interface ImageData {
 }
 
 export interface JournalData {
-  key?: string;
+  key: string;
   id: number;
   name: string;
   description: string;

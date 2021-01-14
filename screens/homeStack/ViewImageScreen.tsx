@@ -38,6 +38,8 @@ export const ViewImageScreen: React.FC<ViewScreenProps> = (
   const handleNewJournal = () => {
     const newJournalId = imgState.journals?.length ?? 0;
     imgState.addJournal({
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      key: curImage.uri.split('/').pop()!.split('.')[0],
       id: newJournalId,
       name: 'Test',
       description: 'test description',
