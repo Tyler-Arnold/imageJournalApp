@@ -74,6 +74,7 @@ const useSocial = () => {
           name: d.data().name as string,
           description: d.data().description as string,
           id: d.data().id as number,
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           key: d.ref.path.split('/').pop()! as string,
           images: [],
         };

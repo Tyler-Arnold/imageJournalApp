@@ -1,12 +1,15 @@
 import {StackScreenProps} from '@react-navigation/stack';
-import {ImageData, JournalData} from '../state/ImageContainer';
+import {
+  FirestoreImage,
+  FirestoreJournal,
+} from '../state/SocialImageContainer';
 
 // for some reason it doesn't work as an interface
 // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
 type RootParamsType = {
   SocialMap: undefined;
-  ViewImage: { img: ImageData };
-  ViewJournal: { img: JournalData };
+  ViewImage: { img: FirestoreImage };
+  ViewJournal: { img: FirestoreJournal };
 };
 
 export type SocialMapScreenProps = StackScreenProps<

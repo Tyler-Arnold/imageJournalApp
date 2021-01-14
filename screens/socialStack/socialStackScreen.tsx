@@ -1,6 +1,7 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {SocialMapScreen} from './SocialMapScreen';
+import {ViewSocialJournalScreen} from './ViewSocialJournalScreen';
 
 /**
  * Screen containing a stack navigator for the actual screens used in
@@ -14,6 +15,10 @@ export const SocialStackScreen: React.FC = () => {
   return (
     <SocialStack.Navigator>
       <SocialStack.Screen name="SocialMap" component={SocialMapScreen} />
+      <SocialStack.Screen
+        name="ViewJournal"
+        component={ViewSocialJournalScreen}
+      />
     </SocialStack.Navigator>
   );
 };

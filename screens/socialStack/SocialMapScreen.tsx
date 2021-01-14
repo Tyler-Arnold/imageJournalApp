@@ -1,9 +1,7 @@
-import React, {useCallback, useEffect, useState} from 'react';
-import {Alert, StyleSheet, Text, View} from 'react-native';
-import MapView, {Marker} from 'react-native-maps';
+import React, {useEffect} from 'react';
+import {StyleSheet, View} from 'react-native';
 import {SocialMapScreenProps} from '../../types/SocialStackScreenProps';
 import {SocialContainer} from '../../state/SocialImageContainer';
-import {JournalList} from '../../components/JournalList';
 import {SocialJournalList} from '../../components/SocialJournalList';
 
 /**
@@ -19,7 +17,11 @@ export const SocialMapScreen: React.FC<SocialMapScreenProps> = (
 
   return (
     <View style={styles.screenView}>
-      <SocialJournalList onPressItem={(j) => {}} />
+      <SocialJournalList
+        onPressItem={(j) => {
+          props.navigation.navigate('ViewJournal', {img: j});
+        }}
+      />
     </View>
   );
 };
