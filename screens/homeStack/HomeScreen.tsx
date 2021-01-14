@@ -6,7 +6,7 @@ import {ImageContainer} from '../../state/ImageContainer';
 import {HomeScreenProps} from '../../types/HomeStackScreenProps';
 
 /**
- * Screen containing the beach flatlist
+ * Screen containing the images and journals flatlist
  * @param {HomeScreenProps} props
  * @return {React.FC<HomeScreenProps> }
  */

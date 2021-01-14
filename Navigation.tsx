@@ -12,6 +12,7 @@ import {CameraStackScreen} from './screens/camStack/CameraStackScreen';
 import {HomeStackScreen} from './screens/homeStack/HomeStackScreen';
 import {LoginScreen} from './screens/loginStack/LoginScreen';
 import {UserContainer} from './state/UserContainer';
+import {SocialStackScreen} from './screens/socialStack/socialStackScreen';
 
 /**
  * Navigation
@@ -31,6 +32,13 @@ export const Navigation: React.FC = () => {
             <Tab.Screen
               name="Home"
               component={HomeStackScreen}
+              options={{
+                tabBarIcon: homeIcon,
+              }}
+            />
+            <Tab.Screen
+              name="Social"
+              component={SocialStackScreen}
               options={{
                 tabBarIcon: homeIcon,
               }}
