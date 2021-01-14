@@ -8,11 +8,15 @@ import {
   TouchableOpacity,
   Dimensions,
 } from 'react-native';
-import {ScrollView} from 'react-native-gesture-handler';
+import {ScrollView, TextInput} from 'react-native-gesture-handler';
 import MapView, {Marker} from 'react-native-maps';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {JournalList} from '../../components/JournalList';
-import {ImageContainer, JournalData} from '../../state/ImageContainer';
+import {
+  ImageContainer,
+  JournalData,
+  ImageData,
+} from '../../state/ImageContainer';
 import {ViewScreenProps} from '../../types/HomeStackScreenProps';
 
 /**
@@ -26,7 +30,13 @@ export const ViewImageScreen: React.FC<ViewScreenProps> = (
   const imageUri = props.route.params.image;
   const imgState = ImageContainer.useContainer();
   const curImage = imgState.images?.find((i) => i.uri === imageUri);
-  const [modalVisible, setModalVisible] = useState(false);
+  const editImage = imgState.editImage;
+  const [journalModalVisible, setJournalModalVisible] = useState(false);
+  const [editModalVisible, setEditModalVisible] = useState(false);
+  const [imageData, setImageData] = useState({
+    name: curImage?.name ?? 'Image Name',
+    description: curImage?.description ?? 'Description',
+  });
 
   if (!curImage) {
     return <Text>why is there no image</Text>;
@@ -54,7 +64,7 @@ export const ViewImageScreen: React.FC<ViewScreenProps> = (
    */
   const handleAddToJournal = (j: JournalData): void => {
     imgState.addImgToJournal(j, curImage);
-    setModalVisible(false);
+    setJournalModalVisible(false);
     props.navigation.navigate('Journal', {id: j.id});
   };
 
@@ -74,10 +84,15 @@ export const ViewImageScreen: React.FC<ViewScreenProps> = (
         ></ImageBackground>
       </ScrollView>
 
-      <View style={styles.image}>
+      <View style={styles.detailsView}>
         <Text>{curImage?.name}</Text>
         <Text>{curImage?.description}</Text>
-        <Text>{curImage?.uri}</Text>
+        <TouchableOpacity
+          style={styles.detailsButton}
+          onPress={() => setEditModalVisible(true)}
+        >
+          <Text style={styles.text}>Edit Details</Text>
+        </TouchableOpacity>
       </View>
 
       <MapView
@@ -101,28 +116,26 @@ export const ViewImageScreen: React.FC<ViewScreenProps> = (
 
         <TouchableOpacity
           style={styles.button}
-          onPress={() => setModalVisible(true)}
+          onPress={() => setJournalModalVisible(true)}
         >
           <Text style={styles.text}>Add to Journal</Text>
         </TouchableOpacity>
       </View>
 
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => setModalVisible(false)}
-      >
-        <View style={styles.modal}>
-          <JournalList onPressItem={handleAddToJournal} />
-          <TouchableOpacity
-            onPress={() => setModalVisible(false)}
-            style={styles.button}
-          >
-            <Text> Close Modal </Text>
-          </TouchableOpacity>
-        </View>
-      </Modal>
+      <JournalModal
+        modalVisible={journalModalVisible}
+        setModalVisible={setJournalModalVisible}
+        handleAddToJournal={handleAddToJournal}
+      />
+
+      <EditImageDataModal
+        modalVisible={editModalVisible}
+        setModalVisible={setEditModalVisible}
+        dataState={{imageData, setImageData}}
+        editImage={(n, d) =>
+          editImage({...curImage, name: n, description: d})
+        }
+      />
     </SafeAreaView>
   );
 };
@@ -132,19 +145,29 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   image: {
-    flex: 0.6,
+    flex: 0.5,
+  },
+  detailsView: {
+    flex: 0.3,
   },
   mapView: {
-    flex: 0.2,
+    flex: 0.25,
   },
   buttView: {
-    flex: 0.2,
+    flex: 0.15,
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
   text: {
     fontSize: 18,
     color: 'black',
+  },
+  textInput: {
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    margin: 20,
+    elevation: 3,
   },
   button: {
     flex: 0,
@@ -153,6 +176,20 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     paddingHorizontal: 10,
     justifyContent: 'center',
+    margin: 5,
+    height: 30,
+  },
+  detailsButton: {
+    flex: 0,
+    backgroundColor: 'grey',
+    elevation: 2,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 30,
+    marginHorizontal: 100,
+    marginVertical: 10,
   },
   modal: {
     flex: 1,
@@ -165,4 +202,129 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5,
     backgroundColor: 'white',
   },
+  scrollModal: {
+    flex: 1,
+    flexDirection: 'column',
+    marginHorizontal: 10,
+    marginVertical: 90,
+    paddingVertical: 10,
+    paddingHorizontal: 5,
+    backgroundColor: 'white',
+  },
 });
+
+// why even use a linter if you're gonna use it like this
+// eslint-disable-next-line valid-jsdoc
+/**
+ * Modal for adding an image to a journal
+ * @param {{
+ *   modalVisible: boolean;
+ *   setModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
+ *   handleAddToJournal: (j: JournalData) => void;
+ * }} props
+ * @return {*}
+ */
+const JournalModal = (props: {
+  modalVisible: boolean;
+  setModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  handleAddToJournal: (j: JournalData) => void;
+}) => {
+  return (
+    <Modal
+      animationType="slide"
+      transparent={true}
+      visible={props.modalVisible}
+      onRequestClose={() => props.setModalVisible(false)}
+    >
+      <View style={styles.modal}>
+        <JournalList onPressItem={props.handleAddToJournal} />
+        <TouchableOpacity
+          onPress={() => props.setModalVisible(false)}
+          style={styles.button}
+        >
+          <Text> Close Modal </Text>
+        </TouchableOpacity>
+      </View>
+    </Modal>
+  );
+};
+
+/**
+ * Edit image data modal
+ * @param {{}} props
+ * @return {*}
+ */
+const EditImageDataModal = (props: {
+  modalVisible: boolean;
+  setModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  dataState: {
+    imageData: {
+      name: string;
+      description: string;
+    };
+    setImageData: React.Dispatch<
+      React.SetStateAction<{
+        name: string;
+        description: string;
+      }>
+    >;
+  };
+  editImage: (name: string, description: string) => void;
+}) => {
+  return (
+    <Modal
+      animationType="slide"
+      transparent={true}
+      visible={props.modalVisible}
+      onRequestClose={() => props.setModalVisible(false)}
+    >
+      <ScrollView
+        style={styles.scrollModal}
+        contentContainerStyle={{flex: 0}}
+      >
+        <View style={styles.image}>
+          <TextInput
+            style={styles.textInput}
+            onChangeText={(t) =>
+              props.dataState.setImageData({
+                ...props.dataState.imageData,
+                name: t,
+              })
+            }
+            value={props.dataState.imageData.name}
+          />
+          <TextInput
+            style={styles.textInput}
+            onChangeText={(t) =>
+              props.dataState.setImageData({
+                ...props.dataState.imageData,
+                description: t,
+              })
+            }
+            value={props.dataState.imageData.description}
+          />
+        </View>
+        <View style={styles.buttView}>
+          <TouchableOpacity
+            onPress={() => {
+              props.editImage(
+                  props.dataState.imageData.name,
+                  props.dataState.imageData.description,
+              );
+              return props.setModalVisible(false);
+            }}
+            style={styles.button}
+          >
+            <Text> Save Changes </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => props.setModalVisible(false)}
+            style={styles.button}
+          >
+            <Text> Cancel </Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    </Modal>
+  );
+};

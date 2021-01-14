@@ -1,13 +1,6 @@
 import {FlatList} from 'react-native-gesture-handler';
 import React from 'react';
-import {
-  Image,
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Alert,
-} from 'react-native';
+import {Image, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import {
   FirestoreImage,
   FirestoreJournal,

@@ -29,9 +29,13 @@ interface UseImageInterface {
   removeImage: (
     image: ImageData
   ) => void | React.Dispatch<ImageData[] | undefined>;
+  editImage: (
+    image: ImageData
+  ) => void | React.Dispatch<React.SetStateAction<ImageData[] | undefined>>;
   journals: JournalData[] | undefined;
   addJournal: (journal: JournalData) => void;
   removeJournal: (journal: JournalData) => void | null;
+  updateJournal: (journal: JournalData) => void | null;
   addImgToJournal: (journal: JournalData, image: ImageData) => void | null;
   removeImgFromJournal: (journal: JournalData, image: ImageData) => void | null;
   updateJournalKey: (journal: JournalData, newKey: string) => void | null;
@@ -45,11 +49,15 @@ function useImage(): UseImageInterface {
   const [images, setImages] = useState<ImageData[] | undefined>();
   const [journals, setJournals] = useState<JournalData[]>();
 
-  const {addImage, removeImage} = imageInteractions(images, setImages);
+  const {addImage, removeImage, editImage} = imageInteractions(
+      images,
+      setImages,
+  );
 
   const {
     addJournal,
     removeJournal,
+    updateJournal,
     addImgToJournal,
     removeImgFromJournal,
     updateJournalKey,
@@ -72,9 +80,11 @@ function useImage(): UseImageInterface {
     images,
     addImage,
     removeImage,
+    editImage,
     journals,
     addJournal,
     removeJournal,
+    updateJournal,
     addImgToJournal,
     removeImgFromJournal,
     updateJournalKey,
@@ -116,6 +126,17 @@ function journalInteractions(
   const removeJournal = (journal: JournalData) => {
     return journals
       ? setJournals([...journals.filter((j) => j !== journal)])
+      : null;
+  };
+
+  /**
+   * Updates a journal
+   * @param {JournalData} journal
+   * @return {*}
+   */
+  const updateJournal = (journal: JournalData) => {
+    return journals
+      ? setJournals(journals.map((j) => (j.key === journal.key ? journal : j)))
       : null;
   };
 
@@ -177,6 +198,7 @@ function journalInteractions(
   return {
     addJournal,
     removeJournal,
+    updateJournal,
     addImgToJournal,
     removeImgFromJournal,
     updateJournalKey,
@@ -213,5 +235,16 @@ function imageInteractions(
     return images ? setImages(images.filter((i) => i !== image)) : setImages;
   };
 
-  return {addImage, removeImage};
+  /**
+   * Edits an image's details
+   * @param {ImageData} image
+   * @return {*}
+   */
+  const editImage = (image: ImageData) => {
+    return images
+      ? setImages(images.map((i) => (i.key === image.key ? image : i)))
+      : setImages;
+  };
+
+  return {addImage, removeImage, editImage};
 }
