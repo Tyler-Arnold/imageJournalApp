@@ -1,5 +1,5 @@
-# bournemouthBeachCheckApp
-https://github.com/Tyler-Arnold/bournemouthBeachCheckApp
+# imageJournalApp
+https://github.com/Tyler-Arnold/imageJournalApp
 
 My Assignment project for final year Ubiquitous Computing unit.
 
