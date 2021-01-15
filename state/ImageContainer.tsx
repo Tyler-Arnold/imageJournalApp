@@ -141,7 +141,7 @@ function journalInteractions(
   };
 
   /**
-   * Adds an image to a journal. This is bad code.
+   * Adds an image to a journal. Sorry for this ternary.
    * @param {JournalData} journal
    * @param {ImageData} image
    * @return {void | null}
@@ -151,7 +151,14 @@ function journalInteractions(
       ? setJournals([
         ...journals.map((j) =>
             j.id === journal.id
-              ? {...j, images: j.images ? j.images.concat([image]) : [image]}
+              ? {
+                ...j,
+                images: j.images
+                    ? j.images.find((i) => i.key === image.key)
+                      ? j.images
+                      : j.images.concat([image])
+                    : [image],
+              }
               : j,
         ),
       ])
@@ -159,7 +166,7 @@ function journalInteractions(
   };
 
   /**
-   * Removes an image to a journal. This is worse code.
+   * Removes an image to a journal. Bad ternary again.
    * @param {JournalData} journal
    * @param {ImageData} image
    * @return {void | null}

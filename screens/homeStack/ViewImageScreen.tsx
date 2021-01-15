@@ -12,11 +12,7 @@ import {ScrollView, TextInput} from 'react-native-gesture-handler';
 import MapView, {Marker} from 'react-native-maps';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {JournalList} from '../../components/JournalList';
-import {
-  ImageContainer,
-  JournalData,
-  ImageData,
-} from '../../state/ImageContainer';
+import {ImageContainer, JournalData} from '../../state/ImageContainer';
 import {ViewScreenProps} from '../../types/HomeStackScreenProps';
 
 /**
