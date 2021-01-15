@@ -16,18 +16,24 @@ export const LoginScreen: React.FC = () => {
   return (
     <View style={styles.screenView}>
       <View style={styles.formView}>
-        <TextInput
-          onChangeText={(t) => setEmail(t.trim())}
-          value={email}
-          keyboardType="email-address"
-          style={styles.textInput}
-        />
-        <TextInput
-          onChangeText={(p) => setPassword(p.trim())}
-          value={password}
-          secureTextEntry={true}
-          style={styles.textInput}
-        />
+        <View style={styles.inputView}>
+          <Text>Email Address:</Text>
+          <TextInput
+            onChangeText={(t) => setEmail(t.trim())}
+            value={email}
+            keyboardType="email-address"
+            style={styles.textInput}
+          />
+        </View>
+        <View style={styles.inputView}>
+          <Text>Password:</Text>
+          <TextInput
+            onChangeText={(p) => setPassword(p.trim())}
+            value={password}
+            secureTextEntry={true}
+            style={styles.textInput}
+          />
+        </View>
       </View>
       <TouchableOpacity
         onPress={() => {
@@ -37,28 +43,43 @@ export const LoginScreen: React.FC = () => {
         }}
         style={styles.loginButton}
       >
-        <Text>Login</Text>
+        <Text style={styles.text}>Login</Text>
       </TouchableOpacity>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  screenView: {flex: 1},
+  screenView: {flex: 1, backgroundColor: 'lightblue'},
   formView: {flex: 0.9, justifyContent: 'space-evenly'},
   loginButton: {
     flex: 0.1,
     marginHorizontal: 30,
     marginVertical: 10,
     backgroundColor: 'grey',
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  text: {
+    fontSize: 18,
+    color: 'white',
   },
   textInput: {
     height: 40,
     borderWidth: 1,
     borderColor: 'grey',
     borderRadius: 5,
-    marginHorizontal: 30,
     justifyContent: 'center',
     alignItems: 'center',
+    width: 200,
+  },
+  inputView: {
+    alignContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'white',
+    marginHorizontal: 30,
+    borderRadius: 30,
+    paddingVertical: 20,
   },
 });

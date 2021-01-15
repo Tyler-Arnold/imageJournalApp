@@ -52,7 +52,13 @@ export const Navigation: React.FC = () => {
             />
           </>
         ) : (
-          <Tab.Screen name="Login" component={LoginScreen} />
+          <Tab.Screen
+            name="Login"
+            component={LoginScreen}
+            options={{
+              tabBarIcon: SocialIcon,
+            }}
+          />
         )}
       </Tab.Navigator>
     </NavigationContainer>

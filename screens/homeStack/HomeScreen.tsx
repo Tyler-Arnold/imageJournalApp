@@ -1,3 +1,4 @@
+import firebase from 'firebase';
 import React from 'react';
 import {View, StyleSheet, Image, Text} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
@@ -36,6 +37,12 @@ export const HomeScreen: React.FC<HomeScreenProps> = (
 
   return (
     <View style={styles.view}>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => firebase.auth().signOut()}
+      >
+        <Text style={styles.text}>Sign Out</Text>
+      </TouchableOpacity>
       <View style={styles.imgContainer}>{ImageIcons}</View>
       <View style={styles.journalContainer}>
         <JournalList
@@ -62,6 +69,23 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 18,
+  },
+  text: {
+    fontSize: 18,
+    color: 'white',
+  },
+  button: {
+    flex: 0,
+    backgroundColor: 'grey',
+    elevation: 2,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 5,
+    marginHorizontal: 120,
+    height: 40,
+    borderRadius: 10,
   },
   imgContainer: {
     flex: 1,
