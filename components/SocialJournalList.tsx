@@ -39,6 +39,7 @@ export const SocialJournalList: React.FC<JournalListProps> = (
       backgroundColor: 'lightgrey',
       margin: 10,
       padding: 5,
+      borderRadius: 10,
     },
     journalTitle: {
       fontWeight: 'bold',
@@ -52,11 +53,13 @@ export const SocialJournalList: React.FC<JournalListProps> = (
       justifyContent: 'center',
       padding: 5,
       margin: 5,
+      borderRadius: 10,
     },
     carouselImg: {
       height: 70,
       width: 70,
       marginHorizontal: 5,
+      borderRadius: 5,
     },
   });
 

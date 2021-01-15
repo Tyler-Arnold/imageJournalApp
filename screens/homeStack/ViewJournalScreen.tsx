@@ -71,7 +71,6 @@ export const ViewJournalScreen: React.FC<JournalScreenProps> = (
           style={styles.imageView}
         />
         <View style={styles.description}>
-          <Text>{curJournal.key}</Text>
           <Text>{curJournal.name}</Text>
           <Text>{curJournal.description}</Text>
           <Text>Images: {curJournal.images!.length}</Text>
@@ -79,7 +78,7 @@ export const ViewJournalScreen: React.FC<JournalScreenProps> = (
             style={styles.detailsButton}
             onPress={() => setEditModalVisible(true)}
           >
-            <Text>Edit Details</Text>
+            <Text style={styles.text}>Edit Details</Text>
           </TouchableOpacity>
         </View>
         <FirestoreBatchedWrite>
@@ -139,7 +138,7 @@ export const ViewJournalScreen: React.FC<JournalScreenProps> = (
                   }, 4000);
                 }}
               >
-                <Text>Make Public</Text>
+                <Text style={styles.text}>Make Public</Text>
               </TouchableOpacity>
             );
           }}
@@ -168,18 +167,23 @@ const styles = StyleSheet.create({
   image: {
     flex: 1,
     marginHorizontal: 10,
-    backgroundColor: 'lightgrey',
+    backgroundColor: 'grey',
   },
   description: {
     flex: 0.3,
   },
+  text: {
+    fontSize: 18,
+    color: 'white',
+  },
   publishButton: {
     flex: 0.1,
-    backgroundColor: 'lightgrey',
+    backgroundColor: 'grey',
     marginHorizontal: 30,
     marginVertical: 10,
     alignItems: 'center',
     justifyContent: 'center',
+    borderRadius: 10,
   },
   textInput: {
     height: 40,
@@ -197,6 +201,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     margin: 5,
     height: 30,
+    borderRadius: 10,
   },
   buttView: {
     flex: 0.15,
@@ -214,6 +219,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 100,
     marginVertical: 10,
     height: 40,
+    borderRadius: 10,
   },
   modal: {
     flex: 1,

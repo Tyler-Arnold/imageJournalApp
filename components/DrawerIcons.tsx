@@ -7,18 +7,42 @@ interface IconProps {
   focused: boolean;
 }
 /**
- * Map Icon
+ * Camera Icon
  * @param {IconProps} props
  * @return {React.FC<IconProps>}
  */
-export const mapIcon: React.FC<IconProps> = (props: IconProps) => {
-  return <Ionicons name={'md-map'} color={props.color} size={props.size} />;
+export const CamIcon: React.FC<IconProps> = (props: IconProps) => {
+  return <Ionicons name={'md-camera'} color={props.color} size={props.size} />;
 };
 /**
  * Home Icon
  * @param {IconProps} props
  * @return {React.FC<IconProps>}
  */
-export const homeIcon: React.FC<IconProps> = (props: IconProps) => (
+export const HomeIcon: React.FC<IconProps> = (props: IconProps) => (
   <Ionicons name={'md-home'} color={props.color} size={props.size} />
 );
+
+/**
+ * Social Icon
+ * @param {IconProps} props
+ * @return {React.FC<IconProps>}
+ */
+export const SocialIcon: React.FC<IconProps> = (props: IconProps) => (
+  <Ionicons name={'md-cloud'} color={props.color} size={props.size} />
+);
+
+/**
+ * Reverse Camera Icon
+ * @param {IconProps} props
+ * @return {React.FC<IconProps>}
+ */
+export const RevCamIcon: React.FC<IconProps> = (props: IconProps) => {
+  return (
+    <Ionicons
+      name={'md-reverse-camera'}
+      color={props.color}
+      size={props.size}
+    />
+  );
+};

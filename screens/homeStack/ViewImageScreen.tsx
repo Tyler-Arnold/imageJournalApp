@@ -39,7 +39,7 @@ export const ViewImageScreen: React.FC<ViewScreenProps> = (
   });
 
   if (!curImage) {
-    return <Text>why is there no image</Text>;
+    return <Text>No image was found</Text>;
   }
 
   /**
@@ -111,7 +111,7 @@ export const ViewImageScreen: React.FC<ViewScreenProps> = (
 
       <View style={styles.buttView}>
         <TouchableOpacity style={styles.button} onPress={handleNewJournal}>
-          <Text style={styles.text}>Create New Journal</Text>
+          <Text style={styles.text}>Create Journal</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -146,9 +146,12 @@ const styles = StyleSheet.create({
   },
   image: {
     flex: 0.5,
+    marginTop: -25,
   },
   detailsView: {
     flex: 0.3,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   mapView: {
     flex: 0.25,
@@ -160,7 +163,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 18,
-    color: 'black',
+    color: 'white',
   },
   textInput: {
     height: 40,
@@ -178,18 +181,20 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     margin: 5,
     height: 30,
+    borderRadius: 10,
   },
   detailsButton: {
     flex: 0,
     backgroundColor: 'grey',
     elevation: 2,
-    paddingVertical: 5,
-    paddingHorizontal: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
     justifyContent: 'center',
     alignItems: 'center',
     height: 30,
     marginHorizontal: 100,
     marginVertical: 10,
+    borderRadius: 10,
   },
   modal: {
     flex: 1,
@@ -201,6 +206,13 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 5,
     backgroundColor: 'white',
+    borderRadius: 30,
+  },
+  journalView: {
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   scrollModal: {
     flex: 1,
@@ -237,12 +249,14 @@ const JournalModal = (props: {
       onRequestClose={() => props.setModalVisible(false)}
     >
       <View style={styles.modal}>
-        <JournalList onPressItem={props.handleAddToJournal} />
+        <View style={styles.journalView}>
+          <JournalList onPressItem={props.handleAddToJournal} />
+        </View>
         <TouchableOpacity
           onPress={() => props.setModalVisible(false)}
           style={styles.button}
         >
-          <Text> Close Modal </Text>
+          <Text style={styles.text}> Close Modal </Text>
         </TouchableOpacity>
       </View>
     </Modal>

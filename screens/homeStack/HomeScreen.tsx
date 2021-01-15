@@ -31,7 +31,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = (
       );
     })
   ) : (
-    <Text>No fukin images</Text>
+    <Text>No Images Were Found, why not take some?</Text>
   );
 
   return (
@@ -78,5 +78,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
     marginVertical: 8,
     backgroundColor: 'red',
+    borderRadius: 10,
+    overflow: 'hidden',
   },
 });

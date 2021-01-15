@@ -50,7 +50,6 @@ export const ViewSocialJournalScreen: React.FC<SocialJournalScreenProps> = (
         />
       </View>
       <View style={styles.description}>
-        <Text>{curJournal.key}</Text>
         <Text>{curJournal.name}</Text>
         <Text>{curJournal.description}</Text>
         <Text>Images: {curJournal.images!.length}</Text>
@@ -64,7 +63,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   imageView: {
-    flex: 0.7,
+    flex: 0.8,
     flexDirection: 'row',
   },
   image: {
@@ -74,6 +73,8 @@ const styles = StyleSheet.create({
   },
   description: {
     flex: 0.2,
+    alignItems: 'center',
+    paddingTop: 10,
   },
   publishButton: {
     flex: 0.1,

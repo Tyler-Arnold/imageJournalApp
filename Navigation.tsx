@@ -7,7 +7,7 @@ import {
   DarkTheme,
 } from '@react-navigation/native';
 import {RootParamsType} from './types/RootParamsType';
-import {homeIcon, mapIcon} from './components/DrawerIcons';
+import {HomeIcon, CamIcon, SocialIcon} from './components/DrawerIcons';
 import {CameraStackScreen} from './screens/camStack/CameraStackScreen';
 import {HomeStackScreen} from './screens/homeStack/HomeStackScreen';
 import {LoginScreen} from './screens/loginStack/LoginScreen';
@@ -33,21 +33,21 @@ export const Navigation: React.FC = () => {
               name="Home"
               component={HomeStackScreen}
               options={{
-                tabBarIcon: homeIcon,
+                tabBarIcon: HomeIcon,
               }}
             />
             <Tab.Screen
               name="Social"
               component={SocialStackScreen}
               options={{
-                tabBarIcon: homeIcon,
+                tabBarIcon: SocialIcon,
               }}
             />
             <Tab.Screen
               name="Camera"
               component={CameraStackScreen}
               options={{
-                tabBarIcon: mapIcon,
+                tabBarIcon: CamIcon,
               }}
             />
           </>

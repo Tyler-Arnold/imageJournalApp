@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import {SocialMapScreenProps} from '../../types/SocialStackScreenProps';
 import {SocialContainer} from '../../state/SocialImageContainer';
 import {SocialJournalList} from '../../components/SocialJournalList';
@@ -17,11 +17,15 @@ export const SocialMapScreen: React.FC<SocialMapScreenProps> = (
 
   return (
     <View style={styles.screenView}>
-      <SocialJournalList
-        onPressItem={(j) => {
-          props.navigation.navigate('ViewJournal', {img: j});
-        }}
-      />
+      {socialState.socialJournals ? (
+        <SocialJournalList
+          onPressItem={(j) => {
+            props.navigation.navigate('ViewJournal', {img: j});
+          }}
+        />
+      ) : (
+        <Text>Loading From Cloud, may take a sec</Text>
+      )}
     </View>
   );
 };

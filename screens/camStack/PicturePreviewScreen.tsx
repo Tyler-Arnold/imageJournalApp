@@ -56,7 +56,6 @@ export const PicturePreviewScreen: React.FC<PreviewStackScreenProps> = (
     <View style={styles.view}>
       <View style={styles.container}>
         <ImageBackground source={{uri: prevImageUri}} style={styles.camera}>
-          <Text style={styles.text}>{prevImageUri}</Text>
           <View style={styles.buttonContainer}>
             <TouchableOpacity
               style={styles.button}
@@ -71,7 +70,7 @@ export const PicturePreviewScreen: React.FC<PreviewStackScreenProps> = (
               style={styles.button}
               onPress={handleApproveImage}
             >
-              <Text style={styles.text}> Appronk </Text>
+              <Text style={styles.text}> Approve </Text>
             </TouchableOpacity>
           </View>
         </ImageBackground>
@@ -104,12 +103,17 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'transparent',
     flexDirection: 'row',
+    justifyContent: 'space-between',
     margin: 20,
   },
   button: {
-    flex: 0.1,
+    flex: 0.3,
     alignSelf: 'flex-end',
     alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'darkgrey',
+    height: 50,
+    borderRadius: 10,
   },
   text: {
     fontSize: 18,

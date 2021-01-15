@@ -81,6 +81,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'lightgrey',
     margin: 10,
     padding: 5,
+    borderRadius: 10,
   },
   journalTitle: {
     fontWeight: 'bold',
@@ -94,10 +95,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 5,
     margin: 5,
+    borderRadius: 10,
   },
   carouselImg: {
     height: 70,
     width: 70,
     marginHorizontal: 5,
+    borderRadius: 5,
   },
 });

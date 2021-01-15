@@ -4,6 +4,7 @@ import {CameraStackScreenProps} from '../../types/CameraStackScreenProps';
 import {Camera} from 'expo-camera';
 import {useIsFocused} from '@react-navigation/native';
 import * as Location from 'expo-location';
+import {CamIcon, RevCamIcon} from '../../components/DrawerIcons';
 
 /**
  * Screen containing camera
@@ -49,7 +50,7 @@ export const CameraScreen: React.FC<CameraStackScreenProps> = (
                   );
                 }}
               >
-                <Text style={styles.text}> Flip </Text>
+                <RevCamIcon color="white" size={32} focused={true} />
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.button}
@@ -64,7 +65,7 @@ export const CameraScreen: React.FC<CameraStackScreenProps> = (
                   });
                 }}
               >
-                <Text style={styles.text}> Snap </Text>
+                <CamIcon color="white" size={32} focused={true} />
               </TouchableOpacity>
             </View>
           </Camera>
@@ -98,12 +99,17 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'transparent',
     flexDirection: 'row',
+    justifyContent: 'space-between',
     margin: 20,
   },
   button: {
-    flex: 0.1,
+    flex: 0.3,
     alignSelf: 'flex-end',
     alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'darkgrey',
+    height: 50,
+    borderRadius: 10,
   },
   text: {
     fontSize: 18,
