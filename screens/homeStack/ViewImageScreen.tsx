@@ -219,6 +219,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5,
     backgroundColor: 'white',
   },
+  editModalView: {
+    flex: 1,
+  },
 });
 
 // why even use a linter if you're gonna use it like this
@@ -292,7 +295,7 @@ const EditImageDataModal = (props: {
         style={styles.scrollModal}
         contentContainerStyle={{flex: 0}}
       >
-        <View style={styles.image}>
+        <View style={styles.editModalView}>
           <TextInput
             style={styles.textInput}
             onChangeText={(t) =>
